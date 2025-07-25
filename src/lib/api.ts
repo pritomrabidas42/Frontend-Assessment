@@ -1,31 +1,23 @@
-"use"
-export async function getProduct() {
-  // Try actual fetch first
+// src/lib/api.ts
+import { Product } from "@/types/product";
+import axios from "axios";
+
+
+const BASE_URL = "https://api.10minuteschool.com/discovery-service/api/v1";
+
+export const getProductData = async (lang: "en" | "bn" = "en"): Promise<Product | null> => {
   try {
-    const res = await fetch("https://api.growskill.com/api/v1/product/munzereen-ielts-course", {
-      cache: "no-store",
+    const res = await axios.get(`${BASE_URL}/products/ielts-course`, {
+      params: { lang },
+      headers: {
+        "X-TENMS-SOURCE-PLATFORM": "web",
+        Accept: "application/json",
+      },
     });
-    if (!res.ok) throw new Error("Network response was not ok");
-    return await res.json();
-    console.log(res);
+
+    return res.data;
   } catch (error) {
-    console.error("API fetch failed:", error);
-    
-    // ✅ Use fallback mock data
-    return {
-      title: "IELTS Course by Munzereen Shahid",
-      description: "Mocked description of the IELTS course.",
-      price: 999,
-      button_text: "Enroll Now",
-      abouts: [
-        { title: "Course Overview", description: "This is a mock course overview." },
-        { title: "Who Should Join", description: "Anyone looking to improve IELTS score." },
-      ],
-      checklist: [
-        { title: "Grammar Practice" },
-        { title: "Speaking Test" },
-        { title: "Mock Exams" },
-      ],
-    };
+    console.error("Error fetching product:", error);
+    return null;
   }
-}
+};
