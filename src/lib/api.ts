@@ -1,4 +1,3 @@
-// src/lib/api.ts
 import { Product } from "@/types/product";
 import axios from "axios";
 
@@ -15,9 +14,10 @@ export const getProductData = async (lang: "en" | "bn" = "en"): Promise<Product 
       },
     });
 
-    return res.data;
+    return res.data.data; 
   } catch (error) {
     console.error("Error fetching product:", error);
     return null;
   }
 };
+

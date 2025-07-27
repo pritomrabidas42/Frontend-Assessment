@@ -1,4 +1,3 @@
-// src/components/YouTubePlayer.tsx
 "use client";
 
 import YouTube from "react-youtube";

@@ -1,5 +1,3 @@
-// src/types/product.ts
-
 export interface Medium {
   url: string;
   type: string;
